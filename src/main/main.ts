@@ -1,30 +1,51 @@
 import { app, BrowserWindow } from 'electron';
+
 import path from 'path';
+import { createPRServer } from './server';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-const createWindow = () => {
+const createWindow = async () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'preload-github.js'),
     },
   });
 
-  // and load the index.html of the app.
-  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
-  } else {
-    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
-  }
+  const server = await createPRServer({
+    onReceivedID(id) {
+      mainWindow.loadURL(`https://github.com/SplashtopInc/sep/pull/${id}/files`);
+    },
+  });
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  server.start();
+
+  // const view = new BrowserView({
+  //   webPreferences: {
+  //     preload: path.join(__dirname, 'preload-github.js'),
+  //   },
+  // });
+
+  // mainWindow.setBrowserView(view);
+
+  // view.webContents.openDevTools();
+  // view.setBounds({ x: 0, y: 0, width: 1200, height: 800 });
+  // view.webContents.loadURL('https://github.com/SplashtopInc/sep');
+
+  mainWindow.loadURL('https://github.com/SplashtopInc/sep');
+
+  // and load the index.html of the app.
+  // if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+  //   mainWindow.loadURL('MAIN_WINDOW_VITE_DEV_SERVER_URL');
+  // } else {
+  //   mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
+  // }
 };
 
 // This method will be called when Electron has finished

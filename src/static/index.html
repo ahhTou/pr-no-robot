@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title></title>
+  </head>
+  <body>
+    <input placeholder="Please input your pr id" id="input" />
+    <button id="submit">Submit</button>
+
+    <script>
+      async function start() {
+        const $input = document.querySelector('#input');
+        const $submit = document.querySelector('#submit');
+
+        $submit.addEventListener('click', async () => {
+          const id = $input.value;
+
+          window.location.href = `/pr/${id}`;
+        });
+      }
+
+      start();
+    </script>
+  </body>
+</html>

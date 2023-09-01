@@ -4,8 +4,17 @@
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".vite/build/main.js",
+  "watch": {
+    "start": {
+      "patterns": [
+        "src/main"
+      ],
+      "extensions": "ts,tsx"
+    }
+  },
   "scripts": {
     "start": "electron-forge start",
+    "dev": "npm-watch start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
@@ -25,14 +34,24 @@
     "@electron-forge/maker-zip": "^6.4.1",
     "@electron-forge/plugin-auto-unpack-natives": "^6.4.1",
     "@electron-forge/plugin-vite": "^6.4.1",
+    "@types/koa": "^2.13.8",
+    "@types/koa-bodyparser": "^4.3.10",
+    "@types/koa-router": "^7.4.4",
+    "@types/koa-static": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "electron": "^26.1.0",
     "eslint": "^8.0.1",
     "eslint-plugin-import": "^2.25.0",
+    "npm-watch": "^0.11.0",
     "ts-node": "^10.0.0",
     "typescript": "~4.5.4"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "koa": "^2.14.2",
+    "koa-bodyparser": "^4.4.1",
+    "koa-router": "^12.0.0",
+    "koa-static": "^5.0.0"
   }
 }
