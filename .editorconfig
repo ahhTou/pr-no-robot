@@ -1,0 +1,7 @@
+# 顶级配置
+root = true
+
+# 所有文件通用规则
+[*]
+indent_style = space
+indent_size = 2

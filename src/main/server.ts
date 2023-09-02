@@ -26,9 +26,7 @@ export async function createPRServer(options?: { onReceivedID?: (id: string) => 
     ctx.redirect('/success.html');
   });
 
-  console.log(path.resolve(__dirname, '../static'));
-
-  app.use(serve(path.resolve(__dirname, '../../src/static')));
+  app.use(serve(path.resolve(__dirname, '../../dist')));
   app.use(bodyParser());
   app.use(router.routes());
   app.use(router.allowedMethods());
