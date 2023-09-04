@@ -1,7 +1,8 @@
-import { app, BrowserWindow } from 'electron';
-
+import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
+
 import { createPRServer } from './server';
+import { addLogs } from './store';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -22,6 +23,16 @@ const createWindow = async () => {
     onReceivedID(id) {
       mainWindow.loadURL(`https://github.com/SplashtopInc/sep/pull/${id}/files`);
     },
+  });
+
+  ipcMain.handle('github_got_username_info', (_, uname: any) => {
+    const { id, username } = uname;
+
+    addLogs({
+      message: `Try to approval PR #${id}`,
+      description: `Create by user '${username}'`,
+      createByUser: username,
+    });
   });
 
   server.start();

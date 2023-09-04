@@ -1,6 +1,8 @@
 // See the Electron documentation for details on how to use preload scripts:
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
+import { ipcRenderer } from 'electron';
+
 function wait(timeout: number) {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -47,6 +49,13 @@ function isPRFilesPage(url: string) {
   return reg.test(url);
 }
 
+function getUsernameLink() {
+  const query = '.author.Link--secondary.text-bold.css-truncate.css-truncate-target.expandable';
+  const element = document.querySelector(query) as HTMLLinkElement;
+
+  return element;
+}
+
 async function start() {
   if (isPRFilesPage(window.location.href)) {
     console.log('BINGO~');
@@ -64,6 +73,10 @@ async function start() {
     }
 
     $button.click();
+
+    const username = getUsernameLink()?.innerText || '';
+
+    ipcRenderer.invoke('github_got_username_info', { username, id });
 
     await wait(300);
 
