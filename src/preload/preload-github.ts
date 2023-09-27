@@ -23,8 +23,8 @@ function getIDOfPR(url: string): string | null {
 }
 
 function getApprovalRadio() {
-  const query = '.form-checkbox.mx-3.my-2 input';
-  const element = document.querySelector(query) as HTMLInputElement;
+  const query = 'pull_request_review[event]_approve';
+  const element = document.getElementById(query) as HTMLInputElement;
 
   return element;
 }
