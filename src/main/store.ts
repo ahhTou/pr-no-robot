@@ -1,6 +1,6 @@
 import createElectronStore from './create-electron-store';
 
-type Log = {
+export type Log = {
   message: string;
   description: string;
   createByUser: string;
@@ -11,6 +11,10 @@ const logsStore = createElectronStore<{ logs: Log[] }>({
   defaults: { logs: [] },
   name: 'logs',
 });
+
+export const getLogs = (): Log[] => {
+  return logsStore.get('logs');
+};
 
 export function addLogs(log: Partial<Log>) {
   const logs = logsStore.get('logs');

@@ -11,6 +11,18 @@ export default defineConfig({
       '@r': path.join(__dirname, './src/renderer'),
     },
   },
+  define: {
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8848',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
   build: {
     outDir: path.join(__dirname, './dist'),
     emptyOutDir: true,

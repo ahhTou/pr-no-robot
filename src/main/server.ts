@@ -5,6 +5,13 @@ import serve from 'koa-static';
 import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
 
+import { getLogs } from './store';
+
+export type MyResponse<T = any> = {
+  message: string;
+  data: T;
+};
+
 const logInfo = (...args: string[]) => console.log(`[ex-auth.server] ${args.join(' ')}`);
 
 export async function createPRServer(options?: { onReceivedID?: (id: string) => void }) {
@@ -16,7 +23,6 @@ export async function createPRServer(options?: { onReceivedID?: (id: string) => 
   let server: Server | null = null;
 
   router.get('/pr/:id', (ctx) => {
-    console.log(ctx.params);
     const { id } = ctx.params;
 
     if (id) {
@@ -24,6 +30,15 @@ export async function createPRServer(options?: { onReceivedID?: (id: string) => 
     }
 
     ctx.redirect('/success.html');
+  });
+
+  router.get('/statistics/log', (ctx) => {
+    const data = getLogs();
+
+    // 设置响应体
+    ctx.body = { message: 'success', data };
+    // 设置 Content-Type 头部
+    ctx.type = 'application/json';
   });
 
   app.use(serve(path.resolve(__dirname, '../../dist')));

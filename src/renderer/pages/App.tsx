@@ -2,9 +2,11 @@ import c from 'classnames';
 import { useState } from 'react';
 
 import '@r/assets/base.css';
+import Statistics from '@r/components/Statistics';
 
 const App = () => {
   const [id, setID] = useState('');
+  const [statisticsVisible, setStatisticsVisible] = useState<boolean>();
 
   const handleGo = () => {
     window.location.href = `/pr/${id}`;
@@ -32,6 +34,23 @@ const App = () => {
           →
         </button>
       </div>
+
+      <div
+        className={c('animate-pulse bottom-4 absolute m-auto text-gray-400 hover:opacity-60 cursor-pointer transition-all')}
+        onClick={() => {
+          setStatisticsVisible((s) => !s);
+        }}
+      >
+        Statistics
+      </div>
+
+      {statisticsVisible && (
+        <Statistics
+          onClose={() => {
+            setStatisticsVisible(false);
+          }}
+        />
+      )}
     </div>
   );
 };
