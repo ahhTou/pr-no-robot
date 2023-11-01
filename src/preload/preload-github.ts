@@ -30,14 +30,14 @@ function getApprovalRadio() {
 }
 
 function getReviewChangesButton() {
-  const query = '.btn.btn-sm.btn-primary.js-reviews-toggle';
+  const query = '#overlay-show-review-changes-modal';
   const element = document.querySelector(query) as HTMLDetailsElement;
 
   return element;
 }
 
 function getSubmitReviewButton() {
-  const query = '.Button--primary.Button--small.Button.float-left.mr-1';
+  const query = '.Button--primary.Button--small.Button.float-left';
   const element = document.querySelector(query) as HTMLButtonElement;
 
   return element;
